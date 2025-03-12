@@ -1,6 +1,7 @@
 package org.fsolsh.deepseek;
 
 import com.alibaba.fastjson2.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.fsolsh.deepseek.api.Client;
 import org.fsolsh.deepseek.api.DefualtClient;
 import org.fsolsh.deepseek.enums.ModelEnums;
@@ -11,6 +12,7 @@ import org.fsolsh.deepseek.request.FimRequest;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class RunAPP {
 
     public static void main(String[] args) {
@@ -44,7 +46,7 @@ public class RunAPP {
 
         List<ChatRequest.Message> messageList = Arrays.asList(systemMessage, userMessage);
         ChatRequest chatRequest = ChatRequest.create(messageList, ModelEnums.DEEPSEEK_CHAT.modelType);
-        System.out.println(JSON.toJSONString(client.chat(chatRequest)));
+        log.info("chat : {}", JSON.toJSONString(client.chat(chatRequest)));
     }
 
     private static void streamChat(String accessKey) {
@@ -68,7 +70,7 @@ public class RunAPP {
     private static void fim(String accessKey) {
         Client client = new DefualtClient(accessKey);
         FimRequest fimRequest = FimRequest.create("Today is national day", ModelEnums.DEEPSEEK_CHAT.modelType);
-        System.out.println(JSON.toJSONString(client.fim(fimRequest)));
+        log.info("fim : {}", JSON.toJSONString(client.fim(fimRequest)));
     }
 
     private static void streamFim(String accessKey) {
@@ -81,12 +83,12 @@ public class RunAPP {
 
     private static void queryBalance(String accessKey) {
         Client client = new DefualtClient(accessKey);
-        System.out.println(JSON.toJSONString(client.queryBalance()));
+        log.info("queryBalance : {}", JSON.toJSONString(client.queryBalance()));
     }
 
     private static void listModel(String accessKey) {
         Client client = new DefualtClient(accessKey);
-        System.out.println(JSON.toJSONString(client.listModel()));
+        log.info("listModel : {}", JSON.toJSONString(client.listModel()));
     }
 
 }
